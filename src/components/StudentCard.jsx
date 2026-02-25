@@ -4,7 +4,7 @@ import Button from './Button';
 
 const StudentCard = ({ student, onDelete, onToggle }) => {
     const initials = student.name.split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
-    const isTop = student.grade >= 90;
+    const isTop = student.grade >= 3.6;
 
     return (
         <div className={`student-card ${!student.isPresent ? 'absent' : ''}`}>
@@ -23,7 +23,7 @@ const StudentCard = ({ student, onDelete, onToggle }) => {
 
             <div className="student-meta">
                 <span><span className="meta-label">Course</span> {student.course}</span>
-                <span><span className="meta-label">Grade</span> <span className="grade-num">{student.grade}%</span></span>
+                <span><span className="meta-label">GPA</span> <span className="grade-num">{student.grade.toFixed(1)}</span></span>
             </div>
 
             <div className="student-actions">

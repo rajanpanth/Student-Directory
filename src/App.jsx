@@ -63,15 +63,15 @@ const App = () => {
     .sort((a, b) => {
       if (sortBy === 'Name A-Z') return a.name.localeCompare(b.name);
       if (sortBy === 'Name Z-A') return b.name.localeCompare(a.name);
-      if (sortBy === 'Grade High-Low') return b.grade - a.grade;
-      if (sortBy === 'Grade Low-High') return a.grade - b.grade;
+      if (sortBy === 'GPA High-Low') return b.grade - a.grade;
+      if (sortBy === 'GPA Low-High') return a.grade - b.grade;
       return 0;
     });
 
   const total = students.length;
   const present = students.filter(s => s.isPresent).length;
   const absent = total - present;
-  const avg = total > 0 ? Math.round(students.reduce((s, x) => s + x.grade, 0) / total) : 0;
+  const avg = total > 0 ? (students.reduce((s, x) => s + x.grade, 0) / total).toFixed(1) : '0.0';
 
   const hasFilters = searchQuery || filterStatus !== 'All' || filterCourse !== 'All';
   const clearFilters = () => {
@@ -85,7 +85,7 @@ const App = () => {
       <header className="header">
         <div>
           <h1>Student Directory</h1>
-          <p>Manage attendance, grades, and student records</p>
+          <p>Manage attendance, GPA, and student records</p>
         </div>
         <button
           className="theme-toggle"
@@ -101,7 +101,6 @@ const App = () => {
         </button>
       </header>
 
-      {/* Stats */}
       <div className="stats">
         <div className="stat">
           <div className="stat-number text-indigo">{total}</div>
@@ -116,12 +115,11 @@ const App = () => {
           <div className="stat-label">Absent</div>
         </div>
         <div className="stat">
-          <div className="stat-number text-amber">{avg}%</div>
-          <div className="stat-label">Avg Grade</div>
+          <div className="stat-number text-amber">{avg}</div>
+          <div className="stat-label">Avg GPA</div>
         </div>
       </div>
 
-      {/* Add Form */}
       <div className="form-section card">
         <div className="form-header" onClick={() => setShowForm(!showForm)}>
           <h2>Add Student</h2>
@@ -132,7 +130,6 @@ const App = () => {
         </div>
       </div>
 
-      {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-top">
           <div className="search-box">
@@ -185,8 +182,8 @@ const App = () => {
             <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
               <option value="Name A-Z">Name A–Z</option>
               <option value="Name Z-A">Name Z–A</option>
-              <option value="Grade High-Low">Grade high–low</option>
-              <option value="Grade Low-High">Grade low–high</option>
+              <option value="GPA High-Low">GPA high–low</option>
+              <option value="GPA Low-High">GPA low–high</option>
             </select>
           </div>
         </div>
@@ -221,7 +218,6 @@ const App = () => {
         )}
       </div>
 
-      {/* Student list */}
       <div className={viewMode === 'grid' ? 'student-grid' : 'student-list'}>
         {filtered.length > 0 ? (
           filtered.map(s => (

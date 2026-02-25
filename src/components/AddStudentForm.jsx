@@ -13,7 +13,7 @@ const AddStudentForm = ({ onAdd }) => {
         const e = {};
         if (!name.trim()) e.name = 'Name is required';
         if (!course.trim()) e.course = 'Course is required';
-        if (!grade.trim() || isNaN(grade) || +grade < 0 || +grade > 100) e.grade = 'Enter a grade between 0–100';
+        if (!grade.trim() || isNaN(grade) || +grade < 0 || +grade > 4) e.grade = 'Enter a GPA between 0.0–4.0';
         setErrors(e);
         return Object.keys(e).length === 0;
     };
@@ -34,7 +34,7 @@ const AddStudentForm = ({ onAdd }) => {
                 <Input
                     id="name"
                     label="Name"
-                    placeholder="Jane Doe"
+                    placeholder="Ram Bahadur"
                     value={name}
                     onChange={e => setName(e.target.value)}
                     error={errors.name}
@@ -49,11 +49,12 @@ const AddStudentForm = ({ onAdd }) => {
                 />
                 <Input
                     id="grade"
-                    label="Grade"
+                    label="GPA (0.0–4.0)"
                     type="number"
                     min="0"
-                    max="100"
-                    placeholder="95"
+                    max="4"
+                    step="0.1"
+                    placeholder="3.5"
                     value={grade}
                     onChange={e => setGrade(e.target.value)}
                     error={errors.grade}
